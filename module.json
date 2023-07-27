@@ -1,0 +1,13 @@
+{
+  "name": "xp-tracker",
+  "title": "XP Tracker",
+  "description": "System Agnostic XP Tracker",
+  "author": "Max",
+  "version": "0.0.1",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "9",
+  "download": "",
+  "esmodules": [
+    "./scripts/pathfinder-sheet.js"
+  ]
+}
