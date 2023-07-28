@@ -1,0 +1,20 @@
+<div class="xp-tracker-wrapper">
+  <table>
+    <thead>
+      <td>Character</td>
+      <td>Level</td>
+      <td>XP</td>
+      <td>Level Up</td>
+    </thead>
+    <tbody>
+      {{#each characters}}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ level }}</td>
+        <td>{{ xp }}</td>
+        <td>{{ nextLevelXp }}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

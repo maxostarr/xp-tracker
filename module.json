@@ -8,6 +8,7 @@
   "compatibleCoreVersion": "9",
   "download": "",
   "esmodules": [
-    "./scripts/pathfinder-sheet.js"
+    "./scripts/xp-tracker.js",
+    "./scripts/xp-tier-schema.js"
   ]
 }
