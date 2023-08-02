@@ -57,6 +57,15 @@ class XPTrackerData {
     journalData.push(character);
     await this._updateJournalEntry(journalData);
   }
+
+  async deleteCharacter(characterId) {
+    const journalData = this.getJournalEntryData();
+    const characterIndex = journalData.findIndex(
+      (character) => character.id === characterId,
+    );
+    journalData.splice(characterIndex, 1);
+    await this._updateJournalEntry(journalData);
+  }
 }
 
 class XPTracker {
@@ -101,7 +110,7 @@ class XPTracker {
   }
 
   async addCharacter(character) {
-    await this.data.addCharacter(character);
+    await this.data.addCharacter({ ...character, id: crypto.randomUUID() });
   }
 
   async rewardXp(xp) {
@@ -165,6 +174,20 @@ class XPTrackerApplication extends Application {
       await this.options.trackerInstance.rewardXp(xp);
       this.render();
     });
+
+    // There will be one for each character in the list
+    // const deleteCharacterButtons = html.find("#delete-character");
+    // console.log(
+    //   "🚀 ~ file: xp-tracker.js:171 ~ XPTrackerApplication ~ activateListeners ~ deleteCharacterButtons:",
+    //   deleteCharacterButtons,
+    // );
+
+    html.on("click", "#delete-character", async (event) => {
+      const characterId =
+        event.currentTarget.parentElement.parentElement.dataset.id;
+      await this.options.data.deleteCharacter(characterId);
+      this.render();
+    });
   }
 }
 
@@ -173,18 +196,22 @@ Hooks.once("ready", async function () {
     {
       name: "Character 1",
       xp: 1000,
+      id: crypto.randomUUID(),
     },
     {
       name: "Character 2",
       xp: 2000,
+      id: crypto.randomUUID(),
     },
     {
       name: "Character 3",
       xp: 3000,
+      id: crypto.randomUUID(),
     },
     {
       name: "Zero",
       xp: 0,
+      id: crypto.randomUUID(),
     },
   ];
   const xpTracker = new XPTracker();

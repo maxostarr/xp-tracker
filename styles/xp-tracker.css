@@ -1,3 +1,17 @@
 .xp-tracker-wrapper .flex {
   display: flex;
 }
+
+.xp-tracker-wrapper .actions {
+}
+.xp-tracker-wrapper .icon-button {
+  /* Remove background */
+  background: none;
+  border: none;
+  /* Remove padding */
+  padding: 0;
+  /* Remove outline */
+  outline: none;
+  /* Remove width */
+  width: auto;
+}
