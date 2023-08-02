@@ -2,20 +2,22 @@ import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 
 class XPTrackerData {
   isInitialized = false;
+  journalEntry = null;
 
-  async initialize() {
+  async initialize(initialData = []) {
     if (this.isInitialized) {
       return;
     }
 
     this.isInitialized = true;
 
-    this.journalEntryId = await this._createOrGetJournalEntry();
+    this.journalEntry = await this._createOrGetJournalEntry(initialData);
+    this.journalEntryId = this.journalEntry.id;
 
     XPTracker.log(true, "Journal Entry ID:", this.journalEntryId);
   }
 
-  async _createOrGetJournalEntry() {
+  async _createOrGetJournalEntry(initialData) {
     // Check if journal entry exists
     // If not, create it
     // Return journal entry id
@@ -24,16 +26,36 @@ class XPTrackerData {
     );
 
     if (maybeJournalEntry) {
-      return maybeJournalEntry.id;
+      return maybeJournalEntry;
     }
 
-    return (
-      await JournalEntry.create({
-        name: XPTracker.DOCUMENT_NAME,
-        content: "",
-        visible: false,
-      })
-    ).id;
+    return await JournalEntry.create({
+      name: XPTracker.DOCUMENT_NAME,
+      content: JSON.stringify(initialData),
+      visible: false,
+    });
+  }
+
+  async _updateJournalEntry(data) {
+    const firstPageId = this.journalEntry.pages.toJSON()[0]._id;
+    const firstPage = this.journalEntry.pages.get(firstPageId);
+    await firstPage.update({
+      text: {
+        content: JSON.stringify(data),
+      },
+    });
+  }
+
+  getJournalEntryData() {
+    const journalDataRaw = this.journalEntry.pages.toJSON()[0].text.content;
+    const journalData = JSON.parse(journalDataRaw);
+    return journalData;
+  }
+
+  async addCharacter(character) {
+    const journalData = this.getJournalEntryData();
+    journalData.push(character);
+    await this._updateJournalEntry(journalData);
   }
 }
 
@@ -63,30 +85,35 @@ class XPTracker {
 
   /**
    * @param {XPTierScheme} xpTierScheme
-   * @param {Character[]} characters
    */
-  constructor(characters = [], xpTierScheme = XP_TIER_SCHEMES.PF1E) {
+  constructor(xpTierScheme = XP_TIER_SCHEMES.PF1E) {
     this.xpTierScheme = xpTierScheme;
-    this.characters = characters;
-    this.application = new XPTrackerApplication();
     this.data = new XPTrackerData();
   }
 
-  async initialize() {
-    await this.data.initialize();
+  async initialize(initialData = []) {
+    await this.data.initialize(initialData);
+    this.application = new XPTrackerApplication({
+      data: this.data,
+      xpTierScheme: this.xpTierScheme,
+      trackerInstance: this,
+    });
   }
 
-  addCharacter(character) {
-    this.characters.push(character);
+  async addCharacter(character) {
+    await this.data.addCharacter(character);
+  }
+
+  async rewardXp(xp) {
+    const journalData = this.data.getJournalEntryData();
+    journalData.forEach((character) => {
+      character.xp += xp;
+    });
+    await this.data._updateJournalEntry(journalData);
   }
 
   render() {
-    this.application.render({
-      renderData: {
-        characters: this.characters,
-        xpTierScheme: this.xpTierScheme,
-      },
-    });
+    this.application.render(true);
   }
 }
 
@@ -104,26 +131,45 @@ class XPTrackerApplication extends Application {
   }
 
   getData() {
+    const journalData = this.options.data.getJournalEntryData();
+
     return {
-      characters: this.renderData.characters.map((character) => {
+      characters: journalData.map((character) => {
         return {
           ...character,
-          level: this.renderData.xpTierScheme.getLevel(character.xp),
-          nextLevelXp: this.renderData.xpTierScheme.getNextLevelXp(
-            character.xp,
-          ),
+          xp: Number(character.xp).toLocaleString(),
+          level: this.options.xpTierScheme.getLevel(character.xp),
+          nextLevelXp: Number(
+            this.options.xpTierScheme.getNextLevelXp(character.xp),
+          ).toLocaleString(),
         };
       }),
     };
   }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    const characterXpInput = html.find(".character-xp");
+    characterXpInput.on("change", (event) => {
+      const characterIndex = event.target.dataset.characterIndex;
+      const characterXp = event.target.value;
+
+      this._updateCharacterXp(characterIndex, characterXp);
+    });
+
+    const rewardXpButton = html.find("#reward-xp");
+    rewardXpButton.on("click", async () => {
+      // const xp = Number(html.find("#xp-amount").val());
+      const xp = 200;
+      await this.options.trackerInstance.rewardXp(xp);
+      this.render();
+    });
+  }
 }
 
-Hooks.on("ready", async function () {
-  console.log(
-    "This code runs once core initialization is ready and game data is available.",
-  );
-
-  const xpTracker = new XPTracker([
+Hooks.once("ready", async function () {
+  const testData = [
     {
       name: "Character 1",
       xp: 1000,
@@ -140,11 +186,23 @@ Hooks.on("ready", async function () {
       name: "Zero",
       xp: 0,
     },
-  ]);
+  ];
+  const xpTracker = new XPTracker();
 
-  await xpTracker.initialize();
+  await xpTracker.initialize(testData);
 
   xpTracker.render(true);
+  Hooks.on("renderXPTrackerApplication", (app, html, data) => {
+    console.log("🚀 ~ file: xp-tracker.js:162 ~ data", data);
+    const addCharacterButton = html.find("#add-character");
+    addCharacterButton.on("click", async () => {
+      await xpTracker.addCharacter({
+        name: "New Character",
+        xp: 0,
+      });
+      xpTracker.render();
+    });
+  });
 });
 
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {

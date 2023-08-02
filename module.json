@@ -1,12 +1,21 @@
 {
-  "name": "xp-tracker",
+  "id": "xp-tracker",
   "title": "XP Tracker",
   "description": "System Agnostic XP Tracker",
-  "author": "Max",
+  "authors": [
+    {
+      "name": "Max"
+    }
+  ],
   "version": "0.0.1",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "11"
+  },
   "download": "",
+  "styles": [
+    "./styles/xp-tracker.css"
+  ],
   "esmodules": [
     "./scripts/xp-tracker.js",
     "./scripts/xp-tier-schema.js"
