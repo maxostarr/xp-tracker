@@ -159,12 +159,13 @@ class XPTrackerApplication extends Application {
   activateListeners(html) {
     super.activateListeners(html);
 
-    const characterXpInput = html.find(".character-xp");
-    characterXpInput.on("change", (event) => {
-      const characterIndex = event.target.dataset.characterIndex;
-      const characterXp = event.target.value;
-
-      this._updateCharacterXp(characterIndex, characterXp);
+    const addCharacterButton = html.find("#add-character");
+    addCharacterButton.on("click", async () => {
+      await this.options.trackerInstance.addCharacter({
+        name: "New Character",
+        xp: 0,
+      });
+      this.render();
     });
 
     const rewardXpButton = html.find("#reward-xp");
@@ -174,13 +175,6 @@ class XPTrackerApplication extends Application {
       await this.options.trackerInstance.rewardXp(xp);
       this.render();
     });
-
-    // There will be one for each character in the list
-    // const deleteCharacterButtons = html.find("#delete-character");
-    // console.log(
-    //   "🚀 ~ file: xp-tracker.js:171 ~ XPTrackerApplication ~ activateListeners ~ deleteCharacterButtons:",
-    //   deleteCharacterButtons,
-    // );
 
     html.on("click", "#delete-character", async (event) => {
       const characterId =
@@ -231,17 +225,6 @@ Hooks.once("ready", async function () {
   await xpTracker.initialize(testData);
 
   xpTracker.render(true);
-  Hooks.on("renderXPTrackerApplication", (app, html, data) => {
-    console.log("🚀 ~ file: xp-tracker.js:162 ~ data", data);
-    const addCharacterButton = html.find("#add-character");
-    addCharacterButton.on("click", async () => {
-      await xpTracker.addCharacter({
-        name: "New Character",
-        xp: 0,
-      });
-      xpTracker.render();
-    });
-  });
 });
 
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
