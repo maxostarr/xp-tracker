@@ -185,6 +185,18 @@ class XPTrackerApplication extends Application {
     html.on("click", "#delete-character", async (event) => {
       const characterId =
         event.currentTarget.parentElement.parentElement.dataset.id;
+      const characterName =
+        event.currentTarget.parentElement.parentElement.dataset.name;
+      const confirmed = await Dialog.confirm({
+        title: "Delete Character",
+        content: `Are you sure you want to delete ${characterName}?`,
+        yes: () => true,
+        no: () => false,
+        defaultYes: false,
+      });
+      if (!confirmed) {
+        return;
+      }
       await this.options.data.deleteCharacter(characterId);
       this.render();
     });
