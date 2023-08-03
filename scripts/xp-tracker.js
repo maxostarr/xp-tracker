@@ -1,3 +1,4 @@
+import { AddCharacterFormApplication } from "./add-character.js";
 import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 
 class XPTrackerData {
@@ -68,12 +69,13 @@ class XPTrackerData {
   }
 }
 
-class XPTracker {
+export class XPTracker {
   static ID = "xp-tracker";
   static DOCUMENT_NAME = "XP Tracker";
 
   static TEMPLATES = {
     DEFAULT: `modules/${this.ID}/templates/xp-tracker.html`,
+    ADD_CHARACTER_FORM: `modules/${this.ID}/templates/add-character.html`,
   };
 
   static log(force, ...args) {
@@ -107,10 +109,20 @@ class XPTracker {
       xpTierScheme: this.xpTierScheme,
       trackerInstance: this,
     });
+    this.addCharacterFormApplication = new AddCharacterFormApplication(
+      {},
+      {
+        trackerInstance: this,
+      },
+    );
   }
 
   async addCharacter(character) {
     await this.data.addCharacter({ ...character, id: crypto.randomUUID() });
+  }
+
+  async showNewCharacterForm() {
+    this.addCharacterFormApplication.render(true);
   }
 
   async rewardXp(xp) {
@@ -161,11 +173,7 @@ class XPTrackerApplication extends Application {
 
     const addCharacterButton = html.find("#add-character");
     addCharacterButton.on("click", async () => {
-      await this.options.trackerInstance.addCharacter({
-        name: "New Character",
-        xp: 0,
-      });
-      this.render();
+      await this.options.trackerInstance.showNewCharacterForm();
     });
 
     const rewardXpButton = html.find("#reward-xp");

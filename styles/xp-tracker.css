@@ -1,5 +1,11 @@
-.xp-tracker-wrapper .flex {
+.xp-tracker-wrapper .flex,
+.xp-tracker-add-character-form .flex {
   display: flex;
+}
+
+.xp-tracker-wrapper .fullwidth,
+.xp-tracker-add-character-form .fullwidth {
+  width: 100%;
 }
 
 .xp-tracker-wrapper .actions {
@@ -14,4 +20,30 @@
   outline: none;
   /* Remove width */
   width: auto;
+}
+
+.xp-tracker-add-character-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.xp-tracker-add-character-form label {
+  width: 100px;
+  /* Don't brek on whitespacee */
+  white-space: nowrap;
+
+  /* Center Text */
+  text-align: center;
+
+  /* Center Vertically */
+  line-height: var(--form-field-height);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.xp-tracker-add-character-form .input-group {
+  gap: 10px;
 }
