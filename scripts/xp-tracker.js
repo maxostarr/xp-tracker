@@ -1,4 +1,5 @@
 import { AddCharacterFormApplication } from "./add-character.js";
+import { RewardXPFormApplication } from "./reward-xp.js";
 import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 
 class XPTrackerData {
@@ -76,6 +77,7 @@ export class XPTracker {
   static TEMPLATES = {
     DEFAULT: `modules/${this.ID}/templates/xp-tracker.html`,
     ADD_CHARACTER_FORM: `modules/${this.ID}/templates/add-character.html`,
+    REWARD_XP_FORM: `modules/${this.ID}/templates/reward-xp.html`,
   };
 
   static log(force, ...args) {
@@ -100,6 +102,7 @@ export class XPTracker {
   constructor(xpTierScheme = XP_TIER_SCHEMES.PF1E) {
     this.xpTierScheme = xpTierScheme;
     this.data = new XPTrackerData();
+    this.rounding = Math.floor;
   }
 
   async initialize(initialData = []) {
@@ -115,20 +118,32 @@ export class XPTracker {
         trackerInstance: this,
       },
     );
+    this.rewardXPFormApplication = new RewardXPFormApplication(
+      {},
+      {
+        trackerInstance: this,
+      },
+    );
   }
 
   async addCharacter(character) {
     await this.data.addCharacter({ ...character, id: crypto.randomUUID() });
   }
 
-  async showNewCharacterForm() {
+  showNewCharacterForm() {
     this.addCharacterFormApplication.render(true);
   }
 
-  async rewardXp(xp) {
+  showRewardXPForm() {
+    this.rewardXPFormApplication.render(true);
+  }
+
+  async rewardXp(xp, characters) {
     const journalData = this.data.getJournalEntryData();
     journalData.forEach((character) => {
-      character.xp += xp;
+      if (!characters || characters.includes(character.id)) {
+        character.xp += xp;
+      }
     });
     await this.data._updateJournalEntry(journalData);
   }
@@ -172,16 +187,17 @@ class XPTrackerApplication extends Application {
     super.activateListeners(html);
 
     const addCharacterButton = html.find("#add-character");
-    addCharacterButton.on("click", async () => {
-      await this.options.trackerInstance.showNewCharacterForm();
+    addCharacterButton.on("click", () => {
+      this.options.trackerInstance.showNewCharacterForm();
     });
 
     const rewardXpButton = html.find("#reward-xp");
-    rewardXpButton.on("click", async () => {
+    rewardXpButton.on("click", () => {
       // const xp = Number(html.find("#xp-amount").val());
-      const xp = 200;
-      await this.options.trackerInstance.rewardXp(xp);
-      this.render();
+      // const xp = 200;
+      // await this.options.trackerInstance.rewardXp(xp);
+      // this.render();
+      this.options.trackerInstance.showRewardXPForm();
     });
 
     html.on("click", "#delete-character", async (event) => {

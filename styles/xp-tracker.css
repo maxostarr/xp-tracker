@@ -1,24 +1,20 @@
 .xp-tracker-wrapper .flex,
-.xp-tracker-add-character-form .flex {
+.xp-tracker-add-character-form .flex,
+.xp-tracker-reward-xp-form .flex {
   display: flex;
 }
 
 .xp-tracker-wrapper .fullwidth,
+.xp-tracker-reward-xp-form .fullwidth,
 .xp-tracker-add-character-form .fullwidth {
   width: 100%;
 }
 
-.xp-tracker-wrapper .actions {
-}
 .xp-tracker-wrapper .icon-button {
-  /* Remove background */
   background: none;
   border: none;
-  /* Remove padding */
   padding: 0;
-  /* Remove outline */
   outline: none;
-  /* Remove width */
   width: auto;
 }
 
@@ -30,13 +26,10 @@
   gap: 10px;
 }
 
-.xp-tracker-add-character-form label {
-  width: 100px;
+.xp-tracker-add-character-form label,
+.xp-tracker-reward-xp-form label {
   /* Don't brek on whitespacee */
   white-space: nowrap;
-
-  /* Center Text */
-  text-align: center;
 
   /* Center Vertically */
   line-height: var(--form-field-height);
@@ -44,6 +37,41 @@
   vertical-align: middle;
 }
 
-.xp-tracker-add-character-form .input-group {
+.xp-tracker-add-character-form .input-group,
+.xp-tracker-reward-xp-form .input-group {
+  gap: 10px;
+}
+
+.xp-tracker-reward-xp-form,
+.xp-tracker-reward-xp-form .characters-select,
+.xp-tracker-reward-xp-form .flex.wrapper {
+  height: 100%;
+  max-height: 100%;
+}
+
+.xp-tracker-reward-xp-form .characters-select {
+  margin: 0 10px;
+}
+
+.xp-tracker-reward-xp-form .characters-select ul {
+  height: calc(100% - 3rem);
+  max-height: calc(100% - 3rem);
+  overflow-y: scroll;
+}
+
+.xp-tracker-reward-xp-form .characters-select ul {
+  list-style: none;
+}
+
+.xp-tracker-reward-xp-form .characters-select li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.xp-tracker-reward-xp-form .xp-rewarded {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
   gap: 10px;
 }

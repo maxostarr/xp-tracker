@@ -6,7 +6,7 @@ export class AddCharacterFormApplication extends FormApplication {
       classes: ["xp-tracker"],
       template: XPTracker.TEMPLATES.ADD_CHARACTER_FORM,
       width: 400,
-      height: 250,
+      height: 400,
       resizable: true,
       minimizable: true,
       title: "Add Character",

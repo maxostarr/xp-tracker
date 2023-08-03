@@ -1,0 +1,28 @@
+<form action="" class="xp-tracker-reward-xp-form">
+  <div class="flex wrapper">
+    <div class="characters-select">
+      <h2>Select Characters</h2>
+      <!-- List with checkboxes for each character -->
+      <ul>
+        {{#each characters}}
+        <li>
+          <label for="{{id}}">{{name}}</label>
+          <input type="checkbox" name="character" id="{{id}}" value="{{id}}" />
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="xp-rewarded">
+      <h2>XP Rewarded</h2>
+
+      <div class="flex fullwidth input-group">
+        <label for="xp-rewarded">Value:</label>
+        <input type="number" name="xp-rewarded" id="xp-rewarded" />
+      </div>
+
+      <h3>XP Per Member: <b id="xp-per-member"></b></h3>
+
+      <button type="submit">Reward XP</button>
+    </div>
+  </div>
+</form>
