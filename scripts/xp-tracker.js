@@ -170,19 +170,23 @@ export class XPTracker {
         name: character.name,
         changes,
       },
-    ])
-      .render(true)
-      .bringToTop();
+    ]).render(true, {
+      focus: true,
+    });
 
     await this.data.editCharacter(characterId, newCharacter);
   }
 
   showNewCharacterForm() {
-    this.addCharacterFormApplication.render(true);
+    this.addCharacterFormApplication.render(true, {
+      focus: true,
+    });
   }
 
   showRewardXPForm() {
-    this.rewardXPFormApplication.render(true);
+    this.rewardXPFormApplication.render(true, {
+      focus: true,
+    });
   }
 
   showEditCharacterForm(characterId) {
@@ -191,7 +195,9 @@ export class XPTracker {
       .find((character) => character.id === characterId);
     new EditCharacterFormApplication(character, {
       trackerInstance: this,
-    }).render(true);
+    }).render(true, {
+      focus: true,
+    });
   }
 
   async rewardXp(xp, characters) {
@@ -213,7 +219,9 @@ export class XPTracker {
       }
     });
 
-    new ChangeSummaryDialog(changes).render(true).bringToTop();
+    new ChangeSummaryDialog(changes).render(true, {
+      focus: true,
+    });
 
     await this.data._updateJournalEntry(journalData);
   }
