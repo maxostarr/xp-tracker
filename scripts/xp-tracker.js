@@ -1,4 +1,5 @@
 import { AddCharacterFormApplication } from "./add-character.js";
+import { EditCharacterFormApplication } from "./edit-character.js";
 import { RewardXPFormApplication } from "./reward-xp.js";
 import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 
@@ -68,6 +69,15 @@ class XPTrackerData {
     journalData.splice(characterIndex, 1);
     await this._updateJournalEntry(journalData);
   }
+
+  async editCharacter(characterId, newCharacter) {
+    const journalData = this.getJournalEntryData();
+    const characterIndex = journalData.findIndex(
+      (character) => character.id === characterId,
+    );
+    journalData[characterIndex] = newCharacter;
+    await this._updateJournalEntry(journalData);
+  }
 }
 
 export class XPTracker {
@@ -78,6 +88,7 @@ export class XPTracker {
     DEFAULT: `modules/${this.ID}/templates/xp-tracker.html`,
     ADD_CHARACTER_FORM: `modules/${this.ID}/templates/add-character.html`,
     REWARD_XP_FORM: `modules/${this.ID}/templates/reward-xp.html`,
+    EDIT_CHARACTER_FORM: `modules/${this.ID}/templates/edit-character.html`,
   };
 
   static log(force, ...args) {
@@ -130,12 +141,25 @@ export class XPTracker {
     await this.data.addCharacter({ ...character, id: crypto.randomUUID() });
   }
 
+  async editCharacter(characterId, newCharacter) {
+    await this.data.editCharacter(characterId, newCharacter);
+  }
+
   showNewCharacterForm() {
     this.addCharacterFormApplication.render(true);
   }
 
   showRewardXPForm() {
     this.rewardXPFormApplication.render(true);
+  }
+
+  showEditCharacterForm(characterId) {
+    const character = this.data
+      .getJournalEntryData()
+      .find((character) => character.id === characterId);
+    new EditCharacterFormApplication(character, {
+      trackerInstance: this,
+    }).render(true);
   }
 
   async rewardXp(xp, characters) {
@@ -217,6 +241,12 @@ class XPTrackerApplication extends Application {
       }
       await this.options.data.deleteCharacter(characterId);
       this.render();
+    });
+
+    html.on("click", "#edit-character", (event) => {
+      const characterId =
+        event.currentTarget.parentElement.parentElement.dataset.id;
+      this.options.trackerInstance.showEditCharacterForm(characterId);
     });
   }
 }
