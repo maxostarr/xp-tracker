@@ -1,31 +1,33 @@
 <div class="xp-tracker-wrapper">
-  <table>
-    <thead>
-      <td>Character</td>
-      <td>Level</td>
-      <td>XP</td>
-      <td>Level Up</td>
-      <td>Actions</td>
-    </thead>
-    <tbody>
-      {{#each characters}}
-      <tr data-id="{{id}}" data-name="{{name}}">
-        <td>{{ name }}</td>
-        <td>{{ level }}</td>
-        <td>{{ xp }}</td>
-        <td>{{ nextLevelXp }}</td>
-        <td class="flex">
-          <button class="icon-button" id="delete-character">
-            <i class="fas fa-trash"></i>
-          </button>
-          <button class="icon-button" id="edit-character">
-            <i class="fas fa-edit"></i>
-          </button>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <td>Character</td>
+        <td>Level</td>
+        <td>XP</td>
+        <td>Level Up</td>
+        <td>Actions</td>
+      </thead>
+      <tbody>
+        {{#each characters}}
+        <tr data-id="{{id}}" data-name="{{name}}">
+          <td>{{ name }}</td>
+          <td>{{ level }}</td>
+          <td>{{ xp }}</td>
+          <td>{{ nextLevelXp }}</td>
+          <td class="flex">
+            <button class="icon-button" id="delete-character">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="icon-button" id="edit-character">
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
   <div class="flex">
     <button id="add-character">Add Character</button>
     <button id="reward-xp">Reward XP</button>
