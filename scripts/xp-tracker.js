@@ -240,8 +240,43 @@ class XPTrackerApplication extends Application {
       height: 400,
       resizable: true,
       minimizable: true,
+      popOut: true,
       title: "XP Tracker",
     });
+  }
+
+  async close(options) {
+    if (options?.force) {
+      return super.close(options);
+    }
+  }
+
+  _getHeaderButtons() {
+    return [
+      {
+        label: "",
+        class: "minimize",
+        icon: "far fa-window-minimize",
+        onclick: function () {
+          if (this._minimized) this.maximize();
+          else {
+            this.minimize();
+            //* Dirty hack to prevent "double minimize" after rapidly double-clicking on the minimize button
+            var _bkpMinimize = this.minimize;
+            this.minimize = () => {};
+            setTimeout(() => {
+              this.minimize = _bkpMinimize;
+            }, 200);
+          }
+        }.bind(this),
+      },
+      {
+        label: "",
+        class: "",
+        icon: "fas fa-cog",
+        onclick: () => this._configurePanel(),
+      },
+    ];
   }
 
   getData() {
