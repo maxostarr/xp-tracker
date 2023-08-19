@@ -1,0 +1,28 @@
+<div class="change-summary-wrapper">
+  <h2>Change Summary</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        {{#each headings}}
+        <td>Old: {{this}}</td>
+        <td></td>
+        <td>New: {{this}}</td>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+      <tr>
+        <td>{{this.name}}</td>
+        {{#each this.changes}}
+        <td>{{this.old}}</td>
+        <td>-></td>
+        <td>{{this.new}}</td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

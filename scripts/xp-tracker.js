@@ -1,4 +1,5 @@
 import { AddCharacterFormApplication } from "./add-character.js";
+import { ChangeSummaryDialog } from "./change-summary.js";
 import { EditCharacterFormApplication } from "./edit-character.js";
 import { RewardXPFormApplication } from "./reward-xp.js";
 import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
@@ -89,6 +90,7 @@ export class XPTracker {
     ADD_CHARACTER_FORM: `modules/${this.ID}/templates/add-character.html`,
     REWARD_XP_FORM: `modules/${this.ID}/templates/reward-xp.html`,
     EDIT_CHARACTER_FORM: `modules/${this.ID}/templates/edit-character.html`,
+    CHANGE_SUMMARY_DIALOG: `modules/${this.ID}/templates/change-summary.html`,
   };
 
   static log(force, ...args) {
@@ -142,6 +144,36 @@ export class XPTracker {
   }
 
   async editCharacter(characterId, newCharacter) {
+    const changes = [];
+    const journalData = this.data.getJournalEntryData();
+    const character = journalData.find(
+      (character) => character.id === characterId,
+    );
+    if (character.name !== newCharacter.name) {
+      changes.push({
+        property: "Name",
+        old: character.name,
+        new: newCharacter.name,
+      });
+    }
+
+    if (character.xp !== newCharacter.xp) {
+      changes.push({
+        property: "XP",
+        old: character.xp,
+        new: newCharacter.xp,
+      });
+    }
+
+    new ChangeSummaryDialog([
+      {
+        name: character.name,
+        changes,
+      },
+    ])
+      .render(true)
+      .bringToTop();
+
     await this.data.editCharacter(characterId, newCharacter);
   }
 
@@ -164,11 +196,25 @@ export class XPTracker {
 
   async rewardXp(xp, characters) {
     const journalData = this.data.getJournalEntryData();
+    const changes = [];
     journalData.forEach((character) => {
       if (!characters || characters.includes(character.id)) {
+        changes.push({
+          name: character.name,
+          changes: [
+            {
+              property: "XP",
+              old: character.xp,
+              new: character.xp + xp,
+            },
+          ],
+        });
         character.xp += xp;
       }
     });
+
+    new ChangeSummaryDialog(changes).render(true).bringToTop();
+
     await this.data._updateJournalEntry(journalData);
   }
 
