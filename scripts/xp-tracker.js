@@ -1,10 +1,10 @@
+import { DOCUMENT_NAME, ID } from "./constants.js";
+import { XPTrackerSettings } from "./settings.js";
 import { AddCharacterFormApplication } from "./add-character.js";
 import { ChangeSummaryDialog } from "./change-summary.js";
-import { DOCUMENT_NAME, ID } from "./constants.js";
 import { EditCharacterFormApplication } from "./edit-character.js";
 import { RewardXPFormApplication } from "./reward-xp.js";
-import { XPTrackerSettings } from "./settings.js";
-// import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
+import { SettingsForm } from "./settings-form.js";
 
 class XPTrackerData {
   isInitialized = false;
@@ -93,6 +93,7 @@ export class XPTracker {
     REWARD_XP_FORM: `modules/${this.ID}/templates/reward-xp.html`,
     EDIT_CHARACTER_FORM: `modules/${this.ID}/templates/edit-character.html`,
     CHANGE_SUMMARY_DIALOG: `modules/${this.ID}/templates/change-summary.html`,
+    SETTINGS_FORM: `modules/${this.ID}/templates/settings-form.html`,
   };
 
   static log(force, ...args) {
@@ -125,18 +126,6 @@ export class XPTracker {
       data: this.data,
       trackerInstance: this,
     });
-    this.addCharacterFormApplication = new AddCharacterFormApplication(
-      {},
-      {
-        trackerInstance: this,
-      },
-    );
-    this.rewardXPFormApplication = new RewardXPFormApplication(
-      {},
-      {
-        trackerInstance: this,
-      },
-    );
   }
 
   async addCharacter(character) {
@@ -178,13 +167,34 @@ export class XPTracker {
   }
 
   showNewCharacterForm() {
-    this.addCharacterFormApplication.render(true, {
+    new AddCharacterFormApplication(
+      {},
+      {
+        trackerInstance: this,
+      },
+    ).render(true, {
       focus: true,
     });
   }
 
   showRewardXPForm() {
-    this.rewardXPFormApplication.render(true, {
+    new RewardXPFormApplication(
+      {},
+      {
+        trackerInstance: this,
+      },
+    ).render(true, {
+      focus: true,
+    });
+  }
+
+  showSettingsForm() {
+    new SettingsForm(
+      {},
+      {
+        trackerInstance: this,
+      },
+    ).render(true, {
       focus: true,
     });
   }
@@ -272,9 +282,9 @@ class XPTrackerApplication extends Application {
       },
       {
         label: "",
-        class: "",
+        class: "settings",
         icon: "fas fa-cog",
-        onclick: () => this._configurePanel(),
+        onclick: () => this.options.trackerInstance.showSettingsForm(),
       },
     ];
   }

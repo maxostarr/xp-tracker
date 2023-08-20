@@ -58,7 +58,6 @@ export class XPTrackerSettings {
         type: setting.type,
         choices: setting.choices,
         onChange: (value) => {
-          console.log("onChange: ", setting.name, value);
           this.trackerInstance[setting.id] = value;
           this.trackerInstance.application.render();
         },
@@ -72,9 +71,27 @@ export class XPTrackerSettings {
     ];
   }
 
+  set xpTierScheme(value) {
+    if (!XPTrackerSettings.XP_TIER_SCHEMES[value]) {
+      throw new Error(
+        `Tried to set xpTierScheme to ${value}, but it is not a valid option`,
+      );
+    }
+    game.settings.set(ID, XPTrackerSettings.XP_TIER_SCHEME.id, value);
+  }
+
   get rounding() {
     return XPTrackerSettings.ROUNDING_OPTIONS[
       game.settings.get(ID, XPTrackerSettings.ROUNDING.id)
     ].function;
+  }
+
+  set rounding(value) {
+    if (!XPTrackerSettings.ROUNDING_OPTIONS[value]) {
+      throw new Error(
+        `Tried to set rounding to ${value}, but it is not a valid option`,
+      );
+    }
+    game.settings.set(ID, XPTrackerSettings.ROUNDING.id, value);
   }
 }

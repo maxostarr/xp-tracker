@@ -1,0 +1,26 @@
+<form action="" class="xp-tracker-add-character-form">
+  <h2>Settings</h2>
+  <div class="flex fullwidth input">
+    <label for="xpTierScheme">XP Tier Scheme:</label>
+    <select name="xpTierScheme" id="xpTierScheme">
+      {{#each xpTierSchemeOptions}}
+      <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>
+        {{this.value}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="flex fullwidth input-group">
+    <label for="rounding">Rounding:</label>
+    <select name="rounding" id="rounding">
+      {{#each roundingOptions}}
+      <option value="{{this.key}}" {{#if this.selected}}selected{{/if}} >
+        {{this.value}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <button type="submit" name="submit" id="submit">Submit</button>
+</form>

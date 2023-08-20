@@ -31,7 +31,7 @@ export class RewardXPFormApplication extends FormApplication {
       if (this.characters.length === 0) {
         this.xpPerMember = this.xpRewarded;
       } else {
-        this.xpPerMember = this.options.trackerInstance.rounding(
+        this.xpPerMember = this.options.trackerInstance.settings.rounding(
           this.xpRewarded / this.characters.length,
         );
       }
