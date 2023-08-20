@@ -1,8 +1,10 @@
 import { AddCharacterFormApplication } from "./add-character.js";
 import { ChangeSummaryDialog } from "./change-summary.js";
+import { DOCUMENT_NAME, ID } from "./constants.js";
 import { EditCharacterFormApplication } from "./edit-character.js";
 import { RewardXPFormApplication } from "./reward-xp.js";
-import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
+import { XPTrackerSettings } from "./settings.js";
+// import { XPTierScheme, XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 
 class XPTrackerData {
   isInitialized = false;
@@ -82,8 +84,8 @@ class XPTrackerData {
 }
 
 export class XPTracker {
-  static ID = "xp-tracker";
-  static DOCUMENT_NAME = "XP Tracker";
+  static ID = ID;
+  static DOCUMENT_NAME = DOCUMENT_NAME;
 
   static TEMPLATES = {
     DEFAULT: `modules/${this.ID}/templates/xp-tracker.html`,
@@ -109,20 +111,18 @@ export class XPTracker {
    * @property {number} xp
    */
 
-  /**
-   * @param {XPTierScheme} xpTierScheme
-   */
-  constructor(xpTierScheme = XP_TIER_SCHEMES.PF1E) {
-    this.xpTierScheme = xpTierScheme;
+  constructor() {
     this.data = new XPTrackerData();
     this.rounding = Math.floor;
   }
 
   async initialize(initialData = []) {
     await this.data.initialize(initialData);
+
+    this.settings = new XPTrackerSettings(this);
+
     this.application = new XPTrackerApplication({
       data: this.data,
-      xpTierScheme: this.xpTierScheme,
       trackerInstance: this,
     });
     this.addCharacterFormApplication = new AddCharacterFormApplication(
@@ -287,9 +287,13 @@ class XPTrackerApplication extends Application {
         return {
           ...character,
           xp: Number(character.xp).toLocaleString(),
-          level: this.options.xpTierScheme.getLevel(character.xp),
+          level: this.options.trackerInstance.settings.xpTierScheme.getLevel(
+            character.xp,
+          ),
           nextLevelXp: Number(
-            this.options.xpTierScheme.getNextLevelXp(character.xp),
+            this.options.trackerInstance.settings.xpTierScheme.getNextLevelXp(
+              character.xp,
+            ),
           ).toLocaleString(),
         };
       }),

@@ -17,7 +17,7 @@ export class AddCharacterFormApplication extends FormApplication {
     const xp =
       formData["starting-at"] === "xp"
         ? parseInt(formData["starting-value"])
-        : this.options.trackerInstance.xpTierScheme.getStartingXpForLevel(
+        : this.options.trackerInstance.settings.xpTierScheme.getStartingXpForLevel(
             parseInt(formData["starting-value"]),
           );
 

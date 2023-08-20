@@ -1,7 +1,9 @@
 export class XPTierScheme {
   levels = [];
-  constructor(levels) {
+  name = "";
+  constructor(name, levels) {
     this.levels = levels;
+    this.name = name;
   }
 
   getLevel(xp) {
@@ -19,7 +21,7 @@ export class XPTierScheme {
 }
 
 export const XP_TIER_SCHEMES = {
-  DND5E: new XPTierScheme([
+  DND5E: new XPTierScheme("DND 5E", [
     0,
     300,
     900,
@@ -43,7 +45,7 @@ export const XP_TIER_SCHEMES = {
     Number.POSITIVE_INFINITY,
   ]),
 
-  PF2E: new XPTierScheme([
+  PF2E: new XPTierScheme("Pathfinder 2E", [
     0,
     1000,
     3000,
@@ -67,7 +69,7 @@ export const XP_TIER_SCHEMES = {
     Number.POSITIVE_INFINITY,
   ]),
 
-  PF1E_SLOW: new XPTierScheme([
+  PF1E_SLOW: new XPTierScheme("Pathfinder 1E Slow", [
     0,
     3000,
     7500,
@@ -91,7 +93,7 @@ export const XP_TIER_SCHEMES = {
     Number.POSITIVE_INFINITY,
   ]),
 
-  PF1E: new XPTierScheme([
+  PF1E: new XPTierScheme("Pathfinder 1E", [
     0,
     2000,
     5000,
@@ -115,7 +117,7 @@ export const XP_TIER_SCHEMES = {
     Number.POSITIVE_INFINITY,
   ]),
 
-  PF1E_FAST: new XPTierScheme([
+  PF1E_FAST: new XPTierScheme("Pathfinder 1E Fast", [
     0,
     1300,
     3300,
