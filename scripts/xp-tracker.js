@@ -96,6 +96,26 @@ export class XPTracker {
     SETTINGS_FORM: `modules/${this.ID}/templates/settings-form.html`,
   }
 
+  getSceneControlButtons(sceneControlButtons) {
+    console.log(sceneControlButtons)
+
+    const notesButton = sceneControlButtons.find(
+      (button) => button.name === "notes",
+    )
+
+    notesButton.tools.push({
+      name: "xp-tracker",
+      title: "XP Tracker",
+      icon: "fas fa-chart-line",
+      visible: true,
+      onClick: () => {
+        this.application.render(true, {
+          focus: true,
+        })
+      },
+    })
+  }
+
   static log(force, ...args) {
     const shouldLog =
       force || game.modules.get("_dev-mode")?.api?.getPackageDebugValue(this.ID)
@@ -127,6 +147,12 @@ export class XPTracker {
       data: this.data,
       trackerInstance: this,
     })
+
+    Hooks.on(
+      "getSceneControlButtons",
+      this.getSceneControlButtons.bind(this),
+    )
+    
   }
 
   async addCharacter(character) {
@@ -201,15 +227,12 @@ export class XPTracker {
   }
 
   setSortBy(sortBy) {
-
     if (sortBy === this.sortBy) {
-
       if (this.sortOrder === "desc") {
         this.sortBy = "default"
         this.application.render()
         return
       }
-        
 
       this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc"
     } else {
@@ -276,12 +299,6 @@ class XPTrackerApplication extends Application {
     })
   }
 
-  async close(options) {
-    if (options?.force) {
-      return super.close(options)
-    }
-  }
-
   _getHeaderButtons() {
     return [
       {
@@ -306,6 +323,12 @@ class XPTrackerApplication extends Application {
         class: "settings",
         icon: "fas fa-cog",
         onclick: () => this.options.trackerInstance.showSettingsForm(),
+      },
+      {
+        label: "",
+        class: "close",
+        icon: "fas fa-times",
+        onclick: () => this.close(),
       },
     ]
   }
@@ -429,3 +452,4 @@ Hooks.once("ready", async function () {
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
   registerPackageDebugFlag(XPTracker.ID)
 })
+
