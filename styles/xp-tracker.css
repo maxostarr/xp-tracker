@@ -18,6 +18,16 @@
   width: auto;
 }
 
+.xp-tracker-wrapper .unstyled-button {
+  background: unset;
+  border: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  color: inherit;
+  text-align: inherit;
+}
+
 .xp-tracker-wrapper {
   display: grid;
   grid-template-rows: 1fr var(--form-field-height);

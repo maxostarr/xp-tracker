@@ -2,9 +2,33 @@
   <div class="table-wrapper">
     <table>
       <thead>
-        <td>Character</td>
+        <td>
+          <button
+            class="unstyled-button fullwidth"
+            id="sort-by"
+            data-sort-type="name"
+          >
+            Character {{#if (eq sortBy "name")}} {{#if (eq sortOrder "asc")}}
+            <i class="fa fa-chevron-down"></i>
+            {{else}}
+            <i class="fa fa-chevron-up"></i>
+            {{/if}} {{/if}}
+          </button>
+        </td>
         <td>Level</td>
-        <td>XP</td>
+        <td>
+          <button
+            class="unstyled-button fullwidth"
+            id="sort-by"
+            data-sort-type="xp"
+          >
+            XP {{#if (eq sortBy "xp")}} {{#if (eq sortOrder "asc")}}
+            <i class="fa fa-chevron-down"></i>
+            {{else}}
+            <i class="fa fa-chevron-up"></i>
+            {{/if}} {{/if}}
+          </button>
+        </td>
         <td>Level Up</td>
         <td>Actions</td>
       </thead>
