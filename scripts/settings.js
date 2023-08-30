@@ -4,7 +4,7 @@ import { XP_TIER_SCHEMES } from "./xp-tier-schema.js";
 export class XPTrackerSettings {
   static ROUNDING_OPTIONS = {
     FLOOR: {
-      name: "Floor",
+      name: "Down",
       function: Math.floor,
     },
     ROUND: {
