@@ -39,6 +39,10 @@ class XPTrackerData {
       name: XPTracker.DOCUMENT_NAME,
       content: JSON.stringify(initialData),
       visible: false,
+      ownership: {
+        [game.user.id]: 3,
+        default: 2
+      }
     })
   }
 
