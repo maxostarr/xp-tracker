@@ -327,7 +327,7 @@ class XPTrackerApplication extends Application {
           }
         }.bind(this),
       },
-      {
+      game.user.isGM && {
         label: "",
         class: "settings",
         icon: "fas fa-cog",
@@ -362,6 +362,7 @@ class XPTrackerApplication extends Application {
     return {
       sortBy: this.options.trackerInstance.sortBy,
       sortOrder: this.options.trackerInstance.sortOrder,
+      isGM: game.user.isGM,
       characters: journalData.map((character) => {
         return {
           ...character,

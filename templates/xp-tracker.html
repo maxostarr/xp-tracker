@@ -30,7 +30,9 @@
           </button>
         </td>
         <td>Level Up</td>
+        {{#if isGM}}
         <td>Actions</td>
+        {{/if}}
       </thead>
       <tbody>
         {{#each characters}}
@@ -39,6 +41,7 @@
           <td>{{ level }}</td>
           <td>{{ xp }}</td>
           <td>{{ nextLevelXp }}</td>
+          {{#if isGM}}
           <td class="flex">
             <button class="icon-button" id="delete-character">
               <i class="fas fa-trash"></i>
@@ -47,13 +50,16 @@
               <i class="fas fa-edit"></i>
             </button>
           </td>
+          {{/if}}
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
+  {{#if isGM}}
   <div class="flex">
     <button id="add-character">Add Character</button>
     <button id="reward-xp">Reward XP</button>
   </div>
+  {{/if}}
 </div>
