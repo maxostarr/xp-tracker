@@ -422,6 +422,8 @@ class XPTrackerApplication extends Application {
 Hooks.once("ready", async function () {
   const xpTracker = new XPTracker()
 
+  await xpTracker.initialize()
+
   xpTracker.render(true)
 })
 
