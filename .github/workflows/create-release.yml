@@ -51,7 +51,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           # automatic_release_tag: "${{steps.version.outputs.prop}}"
           prerelease: false
-          title: "Release"
+          title: "Release ${{ steps.get_version.outputs.VERSION }}"
           files: |
             release-${{steps.get_version.outputs.VERSION}}.zip
 
