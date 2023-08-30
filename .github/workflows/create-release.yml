@@ -38,7 +38,7 @@ jobs:
       - name: Update module.json
         run: |
           sed -i '/"version":/c\    "version": "${{ steps.get_version.outputs.VERSION2 }}",' module.json
-          sed -i '/"download":/c\   "download": "https://github.com/maxostarr/foundry-xp-calculator/releases/download/${{ steps.get_version.outputs.VERSION }}/release-${{steps.get_version.outputs.VERSION}}.zip",' module.json
+          sed -i '/"download":/c\   "download": "https://github.com/maxostarr/xp-tracker/releases/download/${{ steps.get_version.outputs.VERSION }}/release-${{steps.get_version.outputs.VERSION}}.zip",' module.json
           cat module.json
 
 
