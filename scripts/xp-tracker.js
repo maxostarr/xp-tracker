@@ -420,31 +420,7 @@ class XPTrackerApplication extends Application {
 }
 
 Hooks.once("ready", async function () {
-  const testData = [
-    {
-      name: "Character 1",
-      xp: 1000,
-      id: crypto.randomUUID(),
-    },
-    {
-      name: "Character 2",
-      xp: 2000,
-      id: crypto.randomUUID(),
-    },
-    {
-      name: "Character 3",
-      xp: 3000,
-      id: crypto.randomUUID(),
-    },
-    {
-      name: "Zero",
-      xp: 0,
-      id: crypto.randomUUID(),
-    },
-  ]
   const xpTracker = new XPTracker()
-
-  await xpTracker.initialize(testData)
 
   xpTracker.render(true)
 })
