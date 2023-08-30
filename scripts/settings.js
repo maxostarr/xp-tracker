@@ -40,11 +40,20 @@ export class XPTrackerSettings {
       return acc;
     }, {}),
   };
+
+  static SHOW_ON_STARTUP = {
+    id: "showOnStartup",
+    name: "Show on Startup",
+    default: true,
+    type: Boolean,
+  };
+
   constructor(trackerInstance) {
     this.trackerInstance = trackerInstance;
     const settings = [
       XPTrackerSettings.XP_TIER_SCHEME,
       XPTrackerSettings.ROUNDING,
+      XPTrackerSettings.SHOW_ON_STARTUP,
     ];
 
     settings.forEach((setting) => {
@@ -93,5 +102,13 @@ export class XPTrackerSettings {
       );
     }
     game.settings.set(ID, XPTrackerSettings.ROUNDING.id, value);
+  }
+
+  get showOnStartup() {
+    return game.settings.get(ID, XPTrackerSettings.SHOW_ON_STARTUP.id);
+  }
+
+  set showOnStartup(value) {
+    game.settings.set(ID, XPTrackerSettings.SHOW_ON_STARTUP.id, value);
   }
 }

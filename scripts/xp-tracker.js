@@ -424,7 +424,7 @@ Hooks.once("ready", async function () {
 
   await xpTracker.initialize()
 
-  xpTracker.render(true)
+  xpTracker.settings.showOnStartup && xpTracker.render(true)
 })
 
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {

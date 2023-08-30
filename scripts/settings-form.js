@@ -47,12 +47,16 @@ export class SettingsForm extends FormApplication {
       };
     });
 
-    return { xpTierSchemeOptions, roundingOptions };
+    const showOnStartup = this.options.trackerInstance.settings.showOnStartup;
+
+    return { xpTierSchemeOptions, roundingOptions, showOnStartup };
   }
 
   _updateObject(event, formData) {
     this.options.trackerInstance.settings.xpTierScheme =
       formData["xpTierScheme"];
     this.options.trackerInstance.settings.rounding = formData["rounding"];
+    this.options.trackerInstance.settings.showOnStartup =
+      formData["showOnStartup"];
   }
 }
