@@ -7,12 +7,12 @@
       "name": "Max"
     }
   ],
-    "version": "1.0.1",
+    "version": "1.0.3",
   "compatibility": {
     "minimum": "10",
     "verified": "11"
   },
-   "download": "https://github.com/maxostarr/foundry-xp-calculator/releases/download/v1.0.1/release-v1.0.1.zip",
+   "download": "https://github.com/maxostarr/xp-tracker/releases/download/v1.0.3/release-v1.0.3.zip",
   "styles": [
     "./styles/xp-tracker.css"
   ],
