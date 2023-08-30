@@ -35,6 +35,11 @@ class XPTrackerData {
       return maybeJournalEntry
     }
 
+    // If this player is not the GM, we can't create the journal entry
+    if (!game.user.isGM) {
+      return
+    }
+
     return await JournalEntry.create({
       name: XPTracker.DOCUMENT_NAME,
       content: JSON.stringify(initialData),
