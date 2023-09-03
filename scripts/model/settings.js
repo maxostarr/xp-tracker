@@ -57,7 +57,6 @@ export class XPTrackerSettings {
     ];
 
     settings.forEach((setting) => {
-      console.log("Registering: ", setting);
       game.settings.register(ID, setting.id, {
         name: `XP Tracker ${setting.name}`,
         hint: `XP Tracker ${setting.name}`,

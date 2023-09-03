@@ -9,8 +9,6 @@ import { XPTrackerData } from "./model/data.js"
 
 export class XPTracker {
   getSceneControlButtons(sceneControlButtons) {
-    console.log(sceneControlButtons)
-
     const notesButton = sceneControlButtons.find(
       (button) => button.name === "notes",
     )

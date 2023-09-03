@@ -17,18 +17,9 @@ export class SettingsForm extends FormApplication {
   getData() {
     const selectedXpTierScheme =
       this.options.trackerInstance.settings.xpTierScheme;
-    console.log(
-      "🚀 ~ file: settings-form.js:19 ~ SettingsForm ~ getData ~ selectedXpTierScheme:",
-      selectedXpTierScheme,
-    );
     const xpTierSchemeOptions = Object.entries(
       XPTrackerSettings.XP_TIER_SCHEME.choices,
     ).map(([key, value]) => {
-      console.log(
-        "🚀 ~ file: settings-form.js:27 ~ SettingsForm ~ ).map ~ key, value:",
-        key,
-        value,
-      );
       return {
         key,
         value,
