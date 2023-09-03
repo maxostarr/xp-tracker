@@ -1,4 +1,3 @@
-import { DOCUMENT_NAME, ID } from "./constants.js"
 import { XPTrackerSettings } from "./settings.js"
 import { AddCharacterFormApplication } from "./controllers/add-character.js"
 import { ChangeSummaryDialog } from "./controllers/change-summary.js"
@@ -6,106 +5,9 @@ import { EditCharacterFormApplication } from "./controllers/edit-character.js"
 import { RewardXPFormApplication } from "./controllers/reward-xp.js"
 import { SettingsForm } from "./controllers/settings-form.js"
 import { XPTrackerApplication } from "./controllers/xp-tracker.js"
-
-class XPTrackerData {
-  isInitialized = false
-  journalEntry = null
-
-  async initialize(initialData = []) {
-    if (this.isInitialized) {
-      return
-    }
-
-    this.isInitialized = true
-
-    this.journalEntry = await this._createOrGetJournalEntry(initialData)
-    this.journalEntryId = this.journalEntry.id
-
-    XPTracker.log(true, "Journal Entry ID:", this.journalEntryId)
-  }
-
-  async _createOrGetJournalEntry(initialData) {
-    // Check if journal entry exists
-    // If not, create it
-    // Return journal entry id
-    const maybeJournalEntry = game.journal.directory.documents.find(
-      (journalEntry) => journalEntry.name === XPTracker.DOCUMENT_NAME,
-    )
-
-    if (maybeJournalEntry) {
-      return maybeJournalEntry
-    }
-
-    // If this player is not the GM, we can't create the journal entry
-    if (!game.user.isGM) {
-      return
-    }
-
-    return await JournalEntry.create({
-      name: XPTracker.DOCUMENT_NAME,
-      content: JSON.stringify(initialData),
-      visible: false,
-      ownership: {
-        [game.user.id]: 3,
-        default: 2
-      }
-    })
-  }
-
-  async _updateJournalEntry(data) {
-    const firstPageId = this.journalEntry.pages.toJSON()[0]._id
-    const firstPage = this.journalEntry.pages.get(firstPageId)
-    await firstPage.update({
-      text: {
-        content: JSON.stringify(data),
-      },
-    })
-  }
-
-  getJournalEntryData() {
-    const journalDataRaw = this.journalEntry.pages.toJSON()[0].text.content
-    const journalData = JSON.parse(journalDataRaw)
-    return journalData
-  }
-
-  async addCharacter(character) {
-    const journalData = this.getJournalEntryData()
-    journalData.push(character)
-    await this._updateJournalEntry(journalData)
-  }
-
-  async deleteCharacter(characterId) {
-    const journalData = this.getJournalEntryData()
-    const characterIndex = journalData.findIndex(
-      (character) => character.id === characterId,
-    )
-    journalData.splice(characterIndex, 1)
-    await this._updateJournalEntry(journalData)
-  }
-
-  async editCharacter(characterId, newCharacter) {
-    const journalData = this.getJournalEntryData()
-    const characterIndex = journalData.findIndex(
-      (character) => character.id === characterId,
-    )
-    journalData[characterIndex] = newCharacter
-    await this._updateJournalEntry(journalData)
-  }
-}
+import { XPTrackerData } from "./data.js"
 
 export class XPTracker {
-  static ID = ID
-  static DOCUMENT_NAME = DOCUMENT_NAME
-
-  static TEMPLATES = {
-    DEFAULT: `modules/${this.ID}/templates/xp-tracker.html`,
-    ADD_CHARACTER_FORM: `modules/${this.ID}/templates/add-character.html`,
-    REWARD_XP_FORM: `modules/${this.ID}/templates/reward-xp.html`,
-    EDIT_CHARACTER_FORM: `modules/${this.ID}/templates/edit-character.html`,
-    CHANGE_SUMMARY_DIALOG: `modules/${this.ID}/templates/change-summary.html`,
-    SETTINGS_FORM: `modules/${this.ID}/templates/settings-form.html`,
-  }
-
   getSceneControlButtons(sceneControlButtons) {
     console.log(sceneControlButtons)
 
@@ -296,7 +198,9 @@ export class XPTracker {
 }
 
 Hooks.once("ready", async function () {
+  console.log("XP Tracker | Initializing")
   const xpTracker = new XPTracker()
+  console.log('🚀 ~ file: xp-tracker.js:215 ~ xpTracker:', xpTracker)
 
   await xpTracker.initialize()
 
