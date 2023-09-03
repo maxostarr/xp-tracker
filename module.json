@@ -7,17 +7,16 @@
       "name": "Max"
     }
   ],
-    "version": "1.2.0",
+  "version": "1.2.0",
   "compatibility": {
     "minimum": "10",
     "verified": "11"
   },
-   "download": "https://github.com/maxostarr/xp-tracker/releases/download/v1.2.0/release-v1.2.0.zip",
+  "download": "https://github.com/maxostarr/xp-tracker/releases/download/v1.2.0/release-v1.2.0.zip",
   "styles": [
     "./styles/xp-tracker.css"
   ],
   "esmodules": [
-    "./scripts/xp-tracker.js",
-    "./scripts/xp-tier-schema.js"
+    "./scripts/xp-tracker.js"
   ]
 }

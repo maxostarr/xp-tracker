@@ -1,5 +1,5 @@
-import { XPTrackerSettings } from "../settings.js";
-import { TEMPLATES } from "../constants.js";
+import { XPTrackerSettings } from "../model/settings.js";
+import { TEMPLATES } from "../model/constants.js";
 
 export class SettingsForm extends FormApplication {
   static get defaultOptions() {

@@ -1,4 +1,4 @@
-import { TEMPLATES } from "../constants.js";
+import { TEMPLATES } from "../model/constants.js";
 
 export class RewardXPFormApplication extends FormApplication {
   xpPerMember = 0;

@@ -1,11 +1,11 @@
-import { XPTrackerSettings } from "./settings.js"
+import { XPTrackerSettings } from "./model/settings.js"
 import { AddCharacterFormApplication } from "./controllers/add-character.js"
 import { ChangeSummaryDialog } from "./controllers/change-summary.js"
 import { EditCharacterFormApplication } from "./controllers/edit-character.js"
 import { RewardXPFormApplication } from "./controllers/reward-xp.js"
 import { SettingsForm } from "./controllers/settings-form.js"
 import { XPTrackerApplication } from "./controllers/xp-tracker.js"
-import { XPTrackerData } from "./data.js"
+import { XPTrackerData } from "./model/data.js"
 
 export class XPTracker {
   getSceneControlButtons(sceneControlButtons) {
