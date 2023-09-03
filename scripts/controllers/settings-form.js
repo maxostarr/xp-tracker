@@ -1,11 +1,11 @@
-import { XPTrackerSettings } from "./settings.js";
-import { XPTracker } from "./xp-tracker.js";
+import { XPTrackerSettings } from "../settings.js";
+import { TEMPLATES } from "../constants.js";
 
 export class SettingsForm extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["xp-tracker"],
-      template: XPTracker.TEMPLATES.SETTINGS_FORM,
+      template: TEMPLATES.SETTINGS_FORM,
       width: 400,
       height: 400,
       resizable: true,

@@ -1,10 +1,10 @@
-import { XPTracker } from "./xp-tracker.js";
+import { TEMPLATES } from "../constants.js";
 
 export class EditCharacterFormApplication extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["xp-tracker"],
-      template: XPTracker.TEMPLATES.EDIT_CHARACTER_FORM,
+      template: TEMPLATES.EDIT_CHARACTER_FORM,
       width: 400,
       height: 400,
       resizable: true,

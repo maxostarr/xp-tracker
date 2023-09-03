@@ -1,4 +1,4 @@
-import { XPTracker } from "./xp-tracker.js";
+import { TEMPLATES } from "../constants.js";
 
 export class RewardXPFormApplication extends FormApplication {
   xpPerMember = 0;
@@ -8,7 +8,7 @@ export class RewardXPFormApplication extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["xp-tracker"],
-      template: XPTracker.TEMPLATES.REWARD_XP_FORM,
+      template: TEMPLATES.REWARD_XP_FORM,
       width: 400,
       height: 250,
       resizable: true,
