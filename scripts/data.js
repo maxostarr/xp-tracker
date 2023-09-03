@@ -1,4 +1,4 @@
-import { DOCUMENT_NAME } from './constants'
+import { DOCUMENT_NAME } from './constants.js'
 
 export class XPTrackerData {
   isInitialized = false

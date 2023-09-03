@@ -198,9 +198,7 @@ export class XPTracker {
 }
 
 Hooks.once("ready", async function () {
-  console.log("XP Tracker | Initializing")
   const xpTracker = new XPTracker()
-  console.log('🚀 ~ file: xp-tracker.js:215 ~ xpTracker:', xpTracker)
 
   await xpTracker.initialize()
 
