@@ -1,5 +1,5 @@
-import { XPTrackerSettings } from "../model/settings.js";
-import { TEMPLATES } from "../model/constants.js";
+import { XPTrackerSettings } from "../model/settings.js"
+import { TEMPLATES } from "../model/constants.js"
 
 export class SettingsForm extends FormApplication {
   static get defaultOptions() {
@@ -11,12 +11,12 @@ export class SettingsForm extends FormApplication {
       resizable: true,
       minimizable: true,
       title: "Settings",
-    });
+    })
   }
 
   getData() {
     const selectedXpTierScheme =
-      this.options.trackerInstance.settings.xpTierScheme;
+      this.options.trackerInstance.settings.xpTierScheme
     const xpTierSchemeOptions = Object.entries(
       XPTrackerSettings.XP_TIER_SCHEME.choices,
     ).map(([key, value]) => {
@@ -24,10 +24,10 @@ export class SettingsForm extends FormApplication {
         key,
         value,
         selected: value === selectedXpTierScheme.name,
-      };
-    });
+      }
+    })
 
-    const selectedRounding = this.options.trackerInstance.settings.rounding;
+    const selectedRounding = this.options.trackerInstance.settings.rounding
     const roundingOptions = Object.entries(
       XPTrackerSettings.ROUNDING.choices,
     ).map(([key, value]) => {
@@ -35,19 +35,19 @@ export class SettingsForm extends FormApplication {
         key,
         value,
         selected: value === selectedRounding,
-      };
-    });
+      }
+    })
 
-    const showOnStartup = this.options.trackerInstance.settings.showOnStartup;
+    const showOnStartup = this.options.trackerInstance.settings.showOnStartup
 
-    return { xpTierSchemeOptions, roundingOptions, showOnStartup };
+    return { xpTierSchemeOptions, roundingOptions, showOnStartup }
   }
 
   _updateObject(event, formData) {
     this.options.trackerInstance.settings.xpTierScheme =
-      formData["xpTierScheme"];
-    this.options.trackerInstance.settings.rounding = formData["rounding"];
+      formData["xpTierScheme"]
+    this.options.trackerInstance.settings.rounding = formData["rounding"]
     this.options.trackerInstance.settings.showOnStartup =
-      formData["showOnStartup"];
+      formData["showOnStartup"]
   }
 }

@@ -1,4 +1,4 @@
-import { TEMPLATES } from "../model/constants.js";
+import { TEMPLATES } from "../model/constants.js"
 
 export class AddCharacterFormApplication extends FormApplication {
   static get defaultOptions() {
@@ -10,7 +10,7 @@ export class AddCharacterFormApplication extends FormApplication {
       resizable: true,
       minimizable: true,
       title: "Add Character",
-    });
+    })
   }
 
   async _updateObject(event, formData) {
@@ -19,14 +19,14 @@ export class AddCharacterFormApplication extends FormApplication {
         ? parseInt(formData["starting-value"])
         : this.options.trackerInstance.settings.xpTierScheme.getStartingXpForLevel(
             parseInt(formData["starting-value"]),
-          );
+          )
 
     const character = {
       name: formData.name,
       xp,
       id: crypto.randomUUID(),
-    };
-    await this.options.trackerInstance.addCharacter(character);
-    this.options.trackerInstance.render();
+    }
+    await this.options.trackerInstance.addCharacter(character)
+    this.options.trackerInstance.render()
   }
 }

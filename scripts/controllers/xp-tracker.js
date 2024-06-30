@@ -1,4 +1,4 @@
-import { TEMPLATES } from "../model/constants.js";
+import { TEMPLATES } from "../model/constants.js"
 
 export class XPTrackerApplication extends Application {
   static get defaultOptions() {

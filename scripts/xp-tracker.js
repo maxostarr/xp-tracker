@@ -49,11 +49,7 @@ export class XPTracker {
       trackerInstance: this,
     })
 
-    Hooks.on(
-      "getSceneControlButtons",
-      this.getSceneControlButtons.bind(this),
-    )
-    
+    Hooks.on("getSceneControlButtons", this.getSceneControlButtons.bind(this))
   }
 
   async addCharacter(character) {
@@ -197,4 +193,3 @@ Hooks.once("ready", async function () {
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
   registerPackageDebugFlag(XPTracker.ID)
 })
-

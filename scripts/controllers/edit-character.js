@@ -1,4 +1,4 @@
-import { TEMPLATES } from "../model/constants.js";
+import { TEMPLATES } from "../model/constants.js"
 
 export class EditCharacterFormApplication extends FormApplication {
   static get defaultOptions() {
@@ -10,15 +10,15 @@ export class EditCharacterFormApplication extends FormApplication {
       resizable: true,
       minimizable: true,
       title: "Edit Character",
-    });
+    })
   }
 
   async getData() {
-    const { name, xp } = this.object;
+    const { name, xp } = this.object
     return {
       name,
       xp,
-    };
+    }
   }
 
   async _updateObject(event, formData) {
@@ -26,8 +26,8 @@ export class EditCharacterFormApplication extends FormApplication {
       name: formData.name,
       xp: parseInt(formData.xp),
       id: this.object.id,
-    };
-    await this.options.trackerInstance.editCharacter(this.object.id, character);
-    this.options.trackerInstance.render();
+    }
+    await this.options.trackerInstance.editCharacter(this.object.id, character)
+    this.options.trackerInstance.render()
   }
 }

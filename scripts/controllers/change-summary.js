@@ -1,4 +1,4 @@
-import { TEMPLATES } from "../model/constants.js";
+import { TEMPLATES } from "../model/constants.js"
 
 export class ChangeSummaryDialog extends FormApplication {
   static get defaultOptions() {
@@ -10,15 +10,15 @@ export class ChangeSummaryDialog extends FormApplication {
       resizable: true,
       minimizable: true,
       title: "Change Summary",
-    });
+    })
   }
 
   getData() {
-    const headings = this.object[0].changes.map((change) => change.property);
+    const headings = this.object[0].changes.map((change) => change.property)
 
     return {
       rows: this.object,
       headings,
-    };
+    }
   }
 }

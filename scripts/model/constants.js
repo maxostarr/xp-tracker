@@ -1,5 +1,5 @@
-export const ID = "xp-tracker";
-export const DOCUMENT_NAME = "XP Tracker";
+export const ID = "xp-tracker"
+export const DOCUMENT_NAME = "XP Tracker"
 
 export const TEMPLATES = {
   DEFAULT: `modules/${ID}/templates/xp-tracker.html`,
@@ -9,4 +9,4 @@ export const TEMPLATES = {
   EDIT_CHARACTER_FORM: `modules/${ID}/templates/edit-character.html`,
   CHANGE_SUMMARY_DIALOG: `modules/${ID}/templates/change-summary.html`,
   SETTINGS_FORM: `modules/${ID}/templates/settings-form.html`,
-};
+}

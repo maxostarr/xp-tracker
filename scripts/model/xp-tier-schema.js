@@ -1,22 +1,22 @@
 export class XPTierScheme {
-  levels = [];
-  name = "";
+  levels = []
+  name = ""
   constructor(name, levels) {
-    this.levels = levels;
-    this.name = name;
+    this.levels = levels
+    this.name = name
   }
 
   getLevel(xp) {
-    return this.levels.findIndex((level) => xp < level);
+    return this.levels.findIndex((level) => xp < level)
   }
 
   getNextLevelXp(xp) {
-    const nextLevelIndex = this.getLevel(xp);
-    return this.levels[nextLevelIndex];
+    const nextLevelIndex = this.getLevel(xp)
+    return this.levels[nextLevelIndex]
   }
 
   getStartingXpForLevel(level) {
-    return this.levels[level - 1];
+    return this.levels[level - 1]
   }
 }
 
@@ -140,4 +140,4 @@ export const XP_TIER_SCHEMES = {
     2400000,
     Number.POSITIVE_INFINITY,
   ]),
-};
+}

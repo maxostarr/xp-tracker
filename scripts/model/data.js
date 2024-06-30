@@ -1,4 +1,4 @@
-import { DOCUMENT_NAME } from './constants.js'
+import { DOCUMENT_NAME } from "./constants.js"
 
 export class XPTrackerData {
   isInitialized = false
@@ -39,13 +39,13 @@ export class XPTrackerData {
         {
           name: DOCUMENT_NAME,
           content: JSON.stringify(initialData),
-        }
+        },
       ],
       visible: false,
       ownership: {
         [game.user.id]: 3,
-        default: 2
-      }
+        default: 2,
+      },
     })
   }
 
