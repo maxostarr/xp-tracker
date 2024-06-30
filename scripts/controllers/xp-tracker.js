@@ -39,6 +39,12 @@ export class XPTrackerApplication extends Application {
         icon: "fas fa-cog",
         onclick: () => this.options.trackerInstance.showSettingsForm(),
       },
+      game.user.isGM && {
+        label: "",
+        class: "import-export",
+        icon: "fas fa-file-import",
+        onclick: () => this.options.trackerInstance.showImportExportForm(),
+      },
       {
         label: "",
         class: "close",

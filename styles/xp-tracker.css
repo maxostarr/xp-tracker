@@ -6,7 +6,8 @@
 
 .xp-tracker-wrapper .fullwidth,
 .xp-tracker-reward-xp-form .fullwidth,
-.xp-tracker-add-character-form .fullwidth {
+.xp-tracker-add-character-form .fullwidth,
+.xp-tracker-import-export-form .fullwidth {
   width: 100%;
 }
 
@@ -64,7 +65,8 @@
 }
 
 .xp-tracker-add-character-form .input-group,
-.xp-tracker-reward-xp-form .input-group {
+.xp-tracker-reward-xp-form .input-group,
+.xp-tracker-import-export-form .input-group {
   gap: 10px;
 }
 
@@ -99,5 +101,11 @@
   flex-direction: column;
   flex: 1;
   align-items: center;
+  gap: 10px;
+}
+
+.xp-tracker-import-export-form {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }

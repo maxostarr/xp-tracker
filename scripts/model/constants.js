@@ -9,4 +9,5 @@ export const TEMPLATES = {
   EDIT_CHARACTER_FORM: `modules/${ID}/templates/edit-character.html`,
   CHANGE_SUMMARY_DIALOG: `modules/${ID}/templates/change-summary.html`,
   SETTINGS_FORM: `modules/${ID}/templates/settings-form.html`,
+  IMPORT_EXPORT_FORM: `modules/${ID}/templates/import-export.html`,
 }

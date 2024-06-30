@@ -6,6 +6,7 @@ import { RewardXPFormApplication } from "./controllers/reward-xp.js"
 import { SettingsForm } from "./controllers/settings-form.js"
 import { XPTrackerApplication } from "./controllers/xp-tracker.js"
 import { XPTrackerData } from "./model/data.js"
+import { ImportExportFormApplication } from "./controllers/import-export-form.js"
 
 export class XPTracker {
   getSceneControlButtons(sceneControlButtons) {
@@ -114,6 +115,17 @@ export class XPTracker {
 
   showSettingsForm() {
     new SettingsForm(
+      {},
+      {
+        trackerInstance: this,
+      },
+    ).render(true, {
+      focus: true,
+    })
+  }
+
+  showImportExportForm() {
+    new ImportExportFormApplication(
       {},
       {
         trackerInstance: this,
