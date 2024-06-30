@@ -35,6 +35,12 @@ export class XPTrackerData {
     return await JournalEntry.create({
       name: DOCUMENT_NAME,
       content: JSON.stringify(initialData),
+      pages: [
+        {
+          name: DOCUMENT_NAME,
+          content: JSON.stringify(initialData),
+        }
+      ],
       visible: false,
       ownership: {
         [game.user.id]: 3,
